@@ -49,14 +49,35 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 4. Set Poppins Font from assets
-        val typeface = android.graphics.Typeface.createFromAsset(assets, "fonts/Poppins-Bold.ttf")
-        binding.tvHeaderTitle.typeface = typeface
+        val typefaceBold = android.graphics.Typeface.createFromAsset(assets, "fonts/Poppins-Bold.ttf")
+        binding.tvHeaderTitle.typeface = typefaceBold
+        binding.tvTopToolsHeading.typeface = typefaceBold
+        binding.tvAllCategoriesHeading.typeface = typefaceBold
 
-        // 5. Setup Categories Grid
+        // 5. Setup Sections
+        setupTopTools()
         setupCategoriesGrid()
 
         // 6. Double Press to Exit
         setupDoubleBackToExit()
+    }
+
+    private fun setupTopTools() {
+        val topTools = ToolRepository.getTopTools()
+        val adapter = TopToolAdapter(topTools) { tool ->
+            Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
+        }
+        binding.rvTopTools.adapter = adapter
+    }
+
+    private fun setupCategoriesGrid() {
+        val categories = ToolRepository.getCategories()
+        val adapter = CategoryAdapter(categories) { category ->
+            val intent = Intent(this, ToolsActivity::class.java)
+            intent.putExtra("category_name", category.name)
+            startActivity(intent)
+        }
+        binding.rvCategories.adapter = adapter
     }
 
     private fun setupDoubleBackToExit() {
@@ -75,39 +96,6 @@ class MainActivity : AppCompatActivity() {
                 }, 2000)
             }
         })
-    }
-
-    private fun setupCategoriesGrid() {
-        val categories = listOf(
-            Category("PDF Tools", R.drawable.ic_pdf),
-            Category("Image Tools", R.drawable.ic_image),
-            Category("Document Tools", R.drawable.ic_document),
-            Category("Text Tools", R.drawable.ic_text),
-            Category("Calculator", R.drawable.ic_calculator),
-            Category("Converters", R.drawable.ic_converter),
-            Category("Security & Privacy", R.drawable.ic_security),
-            Category("QR & Barcode", R.drawable.ic_qr),
-            Category("Web & URL Tools", R.drawable.ic_web),
-            Category("Color & Design", R.drawable.ic_color),
-            Category("Developer Tools", R.drawable.ic_developer),
-            Category("Date & Time", R.drawable.ic_date),
-            Category("Finance Tools", R.drawable.ic_finance),
-            Category("Math Tools", R.drawable.ic_math),
-            Category("Social Media Tools", R.drawable.ic_social),
-            Category("Audio Tools", R.drawable.ic_audio),
-            Category("Video Tools", R.drawable.ic_video),
-            Category("File Tools", R.drawable.ic_file),
-            Category("Data Tools", R.drawable.ic_data),
-            Category("Miscellaneous Tools", R.drawable.ic_misc),
-            Category("Cyber Cafe Tools", R.drawable.ic_studio)
-        )
-
-        val adapter = CategoryAdapter(categories) { category ->
-            val intent = Intent(this, ToolsActivity::class.java)
-            intent.putExtra("category_name", category.name)
-            startActivity(intent)
-        }
-        binding.rvCategories.adapter = adapter
     }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
