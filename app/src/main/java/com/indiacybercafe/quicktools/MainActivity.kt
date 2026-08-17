@@ -1,5 +1,6 @@
 package com.indiacybercafe.quicktools
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -101,7 +102,11 @@ class MainActivity : AppCompatActivity() {
         )
 
         val adapter = CategoryAdapter(categories) { category ->
-            Toast.makeText(this, "${category.name} clicked", Toast.LENGTH_SHORT).show()
+            if (category.name == "PDF Tools") {
+                startActivity(Intent(this, PdfToolsActivity::class.java))
+            } else {
+                Toast.makeText(this, "${category.name} clicked", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.rvCategories.adapter = adapter
     }
