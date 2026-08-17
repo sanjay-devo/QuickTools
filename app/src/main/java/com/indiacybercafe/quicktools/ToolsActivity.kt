@@ -301,6 +301,11 @@ class ToolsActivity : AppCompatActivity() {
                 Category("Dice Roller", R.drawable.ic_misc),
                 Category("Lorem Ipsum Generator", R.drawable.ic_text)
             )
+            "Cyber Cafe Tools" -> listOf(
+                Category("Passport Photo", R.drawable.ic_passport),
+                Category("PVC Card Studio", R.drawable.ic_pvc),
+                Category("Multi-Page Studio", R.drawable.ic_studio)
+            )
             else -> emptyList()
         }
 

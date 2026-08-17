@@ -98,7 +98,8 @@ class MainActivity : AppCompatActivity() {
             Category("Video Tools", R.drawable.ic_video),
             Category("File Tools", R.drawable.ic_file),
             Category("Data Tools", R.drawable.ic_data),
-            Category("Miscellaneous Tools", R.drawable.ic_misc)
+            Category("Miscellaneous Tools", R.drawable.ic_misc),
+            Category("Cyber Cafe Tools", R.drawable.ic_studio)
         )
 
         val adapter = CategoryAdapter(categories) { category ->
