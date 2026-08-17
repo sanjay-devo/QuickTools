@@ -1,18 +1,16 @@
 package com.indiacybercafe.quicktools
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import com.indiacybercafe.quicktools.databinding.ActivityToolsBinding
+import com.indiacybercafe.quicktools.databinding.ActivityRemoveBgBinding
 
-class ToolsActivity : AppCompatActivity() {
+class RemoveBgActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityToolsBinding
+    private lateinit var binding: ActivityRemoveBgBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +20,8 @@ class ToolsActivity : AppCompatActivity() {
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
 
         // 2. Setup ViewBinding
-        binding = ActivityToolsBinding.inflate(layoutInflater)
+        binding = ActivityRemoveBgBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val categoryName = intent.getStringExtra("category_name") ?: "Tools"
-        binding.tvHeaderTitle.text = categoryName.uppercase()
 
         // 3. Handle system bars padding
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -49,22 +44,6 @@ class ToolsActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
-        // 6. Setup Tools Grid
-        setupToolsGrid(categoryName)
-    }
-
-    private fun setupToolsGrid(categoryName: String) {
-        val tools = ToolRepository.getToolsByCategory(categoryName)
-
-        val adapter = CategoryAdapter(tools) { tool ->
-            if (tool.name == "BG Remove") {
-                startActivity(Intent(this, RemoveBgActivity::class.java))
-            } else {
-                Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.rvTools.adapter = adapter
     }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()

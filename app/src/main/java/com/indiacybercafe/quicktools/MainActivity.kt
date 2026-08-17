@@ -65,7 +65,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupTopTools() {
         val topTools = ToolRepository.getTopTools()
         val adapter = TopToolAdapter(topTools) { tool ->
-            Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
+            if (tool.name == "BG Remove") {
+                startActivity(Intent(this, RemoveBgActivity::class.java))
+            } else {
+                Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.rvTopTools.adapter = adapter
     }
