@@ -55,7 +55,7 @@ object ToolRepository {
                 Category("Image Converter", R.drawable.ic_converter),
                 Category("Rotate Image", R.drawable.ic_converter),
                 Category("Image Watermark", R.drawable.ic_image),
-                Category("Remove Image Background", R.drawable.ic_image),
+                Category("BG Remove", R.drawable.ic_image),
                 Category("Image Metadata Remover", R.drawable.ic_trash)
             )
             "Document Tools" -> listOf(
@@ -292,7 +292,7 @@ object ToolRepository {
         return listOf(
             cyberCafeTools.find { it.name == "Passport Photo" }!!,
             cyberCafeTools.find { it.name == "Multi-Page Studio" }!!,
-            imageTools.find { it.name == "Remove Image Background" }!!
+            imageTools.find { it.name == "BG Remove" }!!
         )
     }
 }
