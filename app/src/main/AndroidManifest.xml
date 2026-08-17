@@ -28,7 +28,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".PdfToolsActivity"
+            android:name=".ToolsActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustResize" />

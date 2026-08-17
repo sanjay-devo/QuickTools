@@ -102,11 +102,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         val adapter = CategoryAdapter(categories) { category ->
-            if (category.name == "PDF Tools") {
-                startActivity(Intent(this, PdfToolsActivity::class.java))
-            } else {
-                Toast.makeText(this, "${category.name} clicked", Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(this, ToolsActivity::class.java)
+            intent.putExtra("category_name", category.name)
+            startActivity(intent)
         }
         binding.rvCategories.adapter = adapter
     }
