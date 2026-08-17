@@ -10,16 +10,14 @@ import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import android.webkit.WebView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.indiacybercafe.quicktools.databinding.ActivitySplashBinding
 
 /**
- * SplashActivity handles the professional full-screen custom splash screen.
- * The splash image completely fills the screen using centerCrop to preserve aspect ratio
- * while touching all four edges.
+ * SplashActivity handles the professional full-screen splash screen.
+ * Transitions to MainActivity after a short delay.
  */
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -32,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         
         super.onCreate(savedInstanceState)
 
-        // 2. Enable true edge-to-edge and hide system bars for full-screen experience
+        // 2. Enable true edge-to-edge and hide system bars
         enableEdgeToEdge()
         hideSystemUI()
 
@@ -40,13 +38,10 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 4. Load splash image from assets and apply to full-screen ImageView
+        // 4. Load splash image from assets
         loadSplashImage()
 
-        // 5. Preload WebView engine
-        preloadWebView()
-
-        // 6. Navigate after 1500ms
+        // 5. Navigate after 1500ms
         Handler(Looper.getMainLooper()).postDelayed({
             navigateToMain()
         }, 1500)
@@ -76,17 +71,6 @@ class SplashActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    private fun preloadWebView() {
-        Handler(Looper.getMainLooper()).post {
-            try {
-                val dummyWebView = WebView(applicationContext)
-                dummyWebView.destroy()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
         }
     }
 
