@@ -29,6 +29,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class RemoveBgActivity : AppCompatActivity() {
 
@@ -188,7 +191,8 @@ class RemoveBgActivity : AppCompatActivity() {
     }
 
     private fun saveImageToGallery(bitmap: Bitmap) {
-        val filename = "BG_Remove_${System.currentTimeMillis()}.png"
+        val timeStamp = SimpleDateFormat("dd-MM-yyyy_HH-mm-ss", Locale.getDefault()).format(Date())
+        val filename = "BG-Remove_QuickTools_$timeStamp.png"
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/png")

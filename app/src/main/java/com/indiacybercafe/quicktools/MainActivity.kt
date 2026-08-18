@@ -65,10 +65,20 @@ class MainActivity : AppCompatActivity() {
     private fun setupTopTools() {
         val topTools = ToolRepository.getTopTools()
         val adapter = TopToolAdapter(topTools) { tool ->
-            if (tool.name == "BG Remove") {
-                startActivity(Intent(this, RemoveBgActivity::class.java))
-            } else {
-                Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
+            when (tool.name) {
+                "BG Remove" -> {
+                    startActivity(Intent(this, RemoveBgActivity::class.java))
+                }
+                "Passport Photo" -> {
+                    // Placeholder for now
+                    Toast.makeText(this, "${tool.name} coming soon", Toast.LENGTH_SHORT).show()
+                }
+                "Multi-Page Studio" -> {
+                    startActivity(Intent(this, MultiPageStudioActivity::class.java))
+                }
+                else -> {
+                    Toast.makeText(this, "${tool.name} clicked", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         binding.rvTopTools.adapter = adapter

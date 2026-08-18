@@ -49,6 +49,9 @@ dependencies {
     // Image Loading
     implementation(libs.glide)
 
+    // Image Cropping
+    implementation("com.github.yalantis:ucrop:2.2.10")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
