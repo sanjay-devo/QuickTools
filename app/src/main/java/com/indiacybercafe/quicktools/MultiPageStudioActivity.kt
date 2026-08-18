@@ -43,7 +43,8 @@ class MultiPageStudioActivity : AppCompatActivity() {
     private data class CardState(
         var originalUri: Uri? = null,
         var croppedUri: Uri? = null,
-        var cropRect: RectF? = null
+        var cropRect: RectF? = null,
+        var perspectivePoints: FloatArray? = null
     )
 
     private val frontCardState = CardState()
@@ -149,10 +150,13 @@ class MultiPageStudioActivity : AppCompatActivity() {
         updateUploadCardUI(isFront)
     }
 
-    private fun handleCroppedImage(uri: Uri, cropRect: RectF?, isFront: Boolean) {
+    private fun handleCroppedImage(uri: Uri, cropRect: RectF?, isFront: Boolean, perspectivePoints: FloatArray? = null) {
         val state = if (isFront) frontCardState else backCardState
         state.croppedUri = uri
         state.cropRect = cropRect
+        if (perspectivePoints != null) {
+            state.perspectivePoints = perspectivePoints
+        }
         updateUploadCardUI(isFront)
     }
 
@@ -203,10 +207,13 @@ class MultiPageStudioActivity : AppCompatActivity() {
         val intent = uCrop.getIntent(this)
         intent.setClass(this, AdjustImageActivity::class.java)
 
-        // Pass existing crop rect to our custom activity
+        // Pass existing crop rect and perspective points to our custom activity
         val state = if (isSelectingFront) frontCardState else backCardState
         state.cropRect?.let {
             intent.putExtra("INITIAL_CROP_RECT", it)
+        }
+        state.perspectivePoints?.let {
+            intent.putExtra("PERSPECTIVE_POINTS", it)
         }
 
         startActivityForResult(intent, UCrop.REQUEST_CROP)
@@ -222,8 +229,9 @@ class MultiPageStudioActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 data.getParcelableExtra("com.yalantis.ucrop.CropRect")
             }
+            val perspectivePoints = data.getFloatArrayExtra("PERSPECTIVE_POINTS")
             resultUri?.let {
-                handleCroppedImage(it, cropRect, isSelectingFront)
+                handleCroppedImage(it, cropRect, isSelectingFront, perspectivePoints)
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Toast.makeText(this, "Crop error", Toast.LENGTH_SHORT).show()
